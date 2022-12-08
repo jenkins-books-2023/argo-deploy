@@ -1,18 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8s-application
+  name: jenkins-server
   namespace: argocd
 spec:
-  project: demo
+  ignoreDifferences:
+  - group: "cilium.io"
+    kind: "*"
+
+  project: default
   source:
     repoURL: https://github.com/ben4932042/argo-deploy.git
     targetRevision: main
-    chart: bitnami/jenkins
-    releaseName: jenkins
+    path: manifests/jenkins
+    helm:
+      passCredentials: false
+      releaseName: jenkins-server
       valueFiles:
-      - deploy/jenkins/values.yaml
-
+        - values.yaml
 
   destination:
     server: https://kubernetes.default.svc
@@ -20,10 +25,11 @@ spec:
 
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true
       allowEmpty: false
-
+    syncOptions:
+      - CreateNamespace=true
 
   revisionHistoryLimit: 10
 

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: app1
+type: application
+version: 1.0.0
+
+dependencies:
+  - condition: jenkins.enabled
+    name: jenkins
+    repository: https://charts.bitnami.com/bitnami
+    version: 11.x.x
+
