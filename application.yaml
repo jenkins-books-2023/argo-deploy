@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-application
+  namespace: argocd
+spec:
+  project: demo
+  source:
+    repoURL: https://github.com/ben4932042/argo-deploy.git
+    targetRevision: main
+    chart: bitnami/jenkins
+    releaseName: jenkins
+      valueFiles:
+      - deploy/jenkins/values.yaml
+
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+
+  revisionHistoryLimit: 10
+
+

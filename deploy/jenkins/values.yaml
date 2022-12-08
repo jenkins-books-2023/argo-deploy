@@ -1,0 +1,185 @@
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+kubeVersion: ""
+nameOverride: ""
+fullnameOverride: ""
+commonLabels: {}
+commonAnnotations: {}
+clusterDomain: cluster.local
+extraDeploy: []
+diagnosticMode:
+  enabled: false
+  command:
+    - sleep
+  args:
+    - infinity
+image:
+  registry: docker.io
+  repository: bitnami/jenkins
+  tag: 2.375.1-debian-11-r0
+  pullPolicy: IfNotPresent
+  pullSecrets:
+    - github-token
+  debug: false
+
+jenkinsUser: jenkins
+## @param jenkinsPassword Jenkins user password
+## Defaults to a random 10-character alphanumeric string if not set
+##
+jenkinsPassword: ""
+jenkinsHost: ""
+jenkinsHome: /bitnami/jenkins/home
+javaOpts: []
+disableInitialization: "no"
+command: []
+args: []
+extraEnvVars: []
+extraEnvVarsCM: ""
+extraEnvVarsSecret: ""
+updateStrategy:
+  type: RollingUpdate
+
+serviceAccountName: "default"
+
+priorityClassName: ""
+schedulerName: ""
+topologySpreadConstraints: []
+hostAliases: []
+extraVolumes: []
+extraVolumeMounts: []
+sidecars: []
+initContainers: []
+lifecycleHooks: {}
+podLabels: {}
+podAnnotations: {}
+podAffinityPreset: ""
+podAntiAffinityPreset: soft
+nodeAffinityPreset:
+  type: ""
+  key: ""
+  values: []
+affinity: {}
+nodeSelector: {}
+tolerations: {}
+
+resources:
+  limits:
+    memory: 2048Mi
+    cpu: 900m
+  requests:
+    memory: 512Mi
+    cpu: 300m
+containerPorts:
+  http: 8080
+  https: 8443
+podSecurityContext:
+  enabled: false
+  fsGroup: 1001
+containerSecurityContext:
+  enabled: false
+  runAsUser: 1001
+  runAsNonRoot: false
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 180
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 6
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 300
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 6
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
+customStartupProbe: {}
+customLivenessProbe: {}
+customReadinessProbe: {}
+
+service:
+  type: LoadBalancer
+  ports:
+    http: 80
+    https: 443
+  clusterIP: ""
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: Cluster
+  annotations: {}
+  extraPorts: []
+  sessionAffinity: None
+  sessionAffinityConfig: {}
+ingress:
+  enabled: false
+  pathType: ImplementationSpecific
+  apiVersion: ""
+  hostname: jenkins.local
+  path: /
+  annotations: {}
+
+  tls: false
+
+  selfSigned: false
+
+  extraHosts: []
+
+  extraPaths: []
+
+  extraTls: []
+
+  secrets: []
+
+  ingressClassName: ""
+
+  extraRules: []
+
+persistence:
+
+  enabled: true
+
+  storageClass: "standard-rwo"
+
+  existingClaim: ""
+
+  annotations: {}
+
+  accessModes:
+    - ReadWriteOnce
+
+  size: 5Gi
+
+  selector: {}
+
+volumePermissions:
+
+  enabled: false
+
+  image:
+    registry: docker.io
+    repository: bitnami/bitnami-shell
+    tag: 11-debian-11-r3
+    pullPolicy: IfNotPresent
+
+    pullSecrets: []
+
+  resources:
+    limits: {}
+    requests: {}
+
+  securityContext:
+    runAsUser: 0
