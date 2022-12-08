@@ -1,13 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jenkins-server
+  name: jenkins
   namespace: argocd
 spec:
-  ignoreDifferences:
-  - group: "cilium.io"
-    kind: "*"
-
   project: default
   source:
     repoURL: https://github.com/ben4932042/argo-deploy.git
@@ -15,7 +11,7 @@ spec:
     path: manifests/jenkins
     helm:
       passCredentials: false
-      releaseName: jenkins-server
+      releaseName: server
       valueFiles:
         - values.yaml
 
@@ -25,7 +21,7 @@ spec:
 
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
       allowEmpty: false
     syncOptions:
