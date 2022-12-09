@@ -4,6 +4,8 @@ metadata:
   name: jenkins
   namespace: argocd
 spec:
+  ignoreDifferences:
+  - kind: Deployment
   project: default
   source:
     repoURL: https://github.com/ben4932042/argo-deploy.git
