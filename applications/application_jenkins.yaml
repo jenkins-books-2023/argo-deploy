@@ -8,7 +8,7 @@ spec:
   - kind: Deployment
   project: default
   source:
-    repoURL: https://github.com/ben4932042/argo-deploy.git
+    repoURL: https://github.com/jenkins-books-2023/argo-deploy.git
     targetRevision: main
     path: manifests/jenkins
     helm:
